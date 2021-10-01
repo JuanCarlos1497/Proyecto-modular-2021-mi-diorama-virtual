@@ -20,7 +20,8 @@ const url = "mongodb+srv://"+user+":"+password+"@cluster0.s9ejk.mongodb.net/"+ba
     });
 });*/
 app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"/login.html");
+    //res.sendFile(__dirname+"/login.html");
+    res.send("hola");
 });
 app.post("/login",(req,res)=>{
   var correo = req.param('correo');
