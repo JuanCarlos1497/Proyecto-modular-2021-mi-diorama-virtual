@@ -1,0 +1,17 @@
+{
+  "name": "Proyecto-modular-2021-mi-diorama-virtual",
+  "version": "1.0.0",
+  "description": "Esta aplicacion se realizo por motivos estudiantiles y no comerciales",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^4.1.2"
+  }
+}
