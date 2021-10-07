@@ -34,8 +34,14 @@
             http.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
-                    //var resultado = JSON.parse(this.responseText)
-                    //console.log(resultado.name)
+                    var resultado=this.responseText;
+                    if(resultado==1){
+                        window.location="/home";
+                    }
+                    if(resultado==0){
+                        alert("el password o usuario estan mal vuelva a ingresarlos");
+                    }
+                    
                 }
             }
             http.send()
@@ -64,7 +70,7 @@
                     <input id="password" type="password" class="form-control" aria-label="Sizing example input"
                         aria-describedby="inputGroup-sizing-default">
                 </div>
-                <button type="button" class="btn btn-outline-warning" onclick="loguearse()">Ingresar</button>
+                <button type="button" class="btn btn-outline-warning" onclick="loguearse()">Ingresar</button><a href="/archivoRegistro">Registrate</a>
             </div>
         </center>
     </div>
