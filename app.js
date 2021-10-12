@@ -55,8 +55,7 @@ app.post("/login", (req, res) => {
           res.send("0");
         }
       });
-      //app.locals.datosUsuario=result;
-      //ress.send("1");
+      
       db.close();
     });
   });
