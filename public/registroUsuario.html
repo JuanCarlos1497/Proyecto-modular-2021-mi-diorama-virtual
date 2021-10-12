@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <style>
+        #contenedor {
+            height: 400px;
+            width: 400px;
+        }
+        #fotodiv{
+            padding-top: 2pc;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br><br><br>
+    <center>
+        <div id="contenedor">
+            <font size="5" face="Comic Sans MS,arial,verdana">Registro</font>
+            <div class="input-group mb-3" id="fotodiv">
+                <span class="input-group-text" id="inputGroup-sizing-default">Foto</span>
+                <input id="inputFile" type="file" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Nombre usuario</span>
+                <input id="nombre" type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
+                <input id="correo" type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                <input id="password" type="password" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Genero</span>
+                <div class="input-group-text">
+                    <input id="masculino" onclick="esMasculino()" class="form-check-input mt-0" type="checkbox"
+                        value="masculino" aria-label="Checkbox for following text input">
+                    <span class="input-group-text" id="inputGroup-sizing-default">masculino</span>
+                </div>
+                <div class="input-group-text">
+                    <input id="femenino" onclick="esFemenino()" class="form-check-input mt-0" type="checkbox"
+                        value="femenino" aria-label="Checkbox for following text input">
+                    <span class="input-group-text" id="inputGroup-sizing-default">femenino</span>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script>
+        function subir() {
+            var nombreUsuario = document.getElementById('nombre').value;
+            const inputFile = document.querySelector("#inputFile");
+
+
+            if (inputFile.files.length > 0) {
+                let formData = new FormData();
+                formData.append("nombre_usuario", nombreUsuario);
+                formData.append("archivo", inputFile.files[0]); // En la posición 0; es decir, el primer elemento
+
+                fetch("https://servidorftpescuela.000webhostapp.com/archivo.php", {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(respuesta => respuesta.text())
+                    .then(decodificado => {
+                        console.log(decodificado);
+                    });
+                alert("Archivo enviado");
+            } else {
+                // El usuario no ha seleccionado archivos
+                alert("Selecciona un archivo");
+            }
+        }
+        function enviarDatos() {
+            var nombre = document.getElementById('nombre').value;
+            var correo = document.getElementById('correo').value;
+            var password = document.getElementById('password').value;
+            const inputFileNombre = document.getElementById("inputFile").files[0].name;
+            var genero;
+            if (inputCheckMasculino.checked) {
+                genero = inputCheckMasculino.value;
+            }
+            if (inputCheckFemenino.checked) {
+                genero = inputCheckFemenino.value;
+            }
+
+            var fecha = new Date();
+            var fechaCreacion = fecha.toLocaleDateString();
+
+            const url = '/registrar?nombre=' + nombre + '&correo=' + correo + '&password=' + password + '&genero=' + genero + '&fecha_creacion=' + fechaCreacion + '&foto=' + inputFileNombre;
+            const http = new XMLHttpRequest()
+
+            http.open("POST", url)
+            http.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    //var resultado = JSON.parse(this.responseText)
+                    //console.log(resultado.id)
+                    var resultado = this.responseText;
+                    if (resultado == "1") {
+                        subir();
+                        alert("se subio con exito");
+                        windows.location = "/";
+                    }
+                    else {
+                        alert("no se pudo registrar")
+                    }
+
+                }
+            }
+            http.send()
+        }
+        var inputCheckMasculino = document.getElementById('masculino');
+        var inputCheckFemenino = document.getElementById('femenino');
+        function esMasculino() {
+            inputCheckFemenino.checked = false;
+        }
+        function esFemenino() {
+            inputCheckMasculino.checked = false;
+        }
+        var div = document.getElementById('contenedor');
+        let boton = document.createElement('button');
+        boton.setAttribute("type", "button");
+        boton.setAttribute("class", "btn btn-outline-secondary");
+        boton.innerText = "Registrarse";
+        boton.onclick = () => {
+            enviarDatos();
+        }
+        div.append(boton);
+    </script>
+</body>
+
+</html>
