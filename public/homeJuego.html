@@ -71,7 +71,7 @@
         window.location = "/";
     }
     function datosGlobales() {
-        const url = '/datos';
+        const url = '/datos?id='+sessionStorage.getItem('id');
         const http = new XMLHttpRequest()
 
         http.open("POST", url)
@@ -96,6 +96,21 @@
         http.send()
     }
     datosGlobales();
+
+    function fijaUsuario(){
+        const url = ''
+const http = new XMLHttpRequest()
+
+http.open("POST", url)
+http.onreadystatechange = function(){
+
+    if(this.readyState == 4 && this.status == 200){
+        var resultado = JSON.parse(this.responseText)
+        console.log(resultado.id)
+    }
+}
+http.send()
+    }
 
 </script>
 

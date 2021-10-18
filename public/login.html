@@ -34,11 +34,12 @@
             http.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
-                    var resultado=this.responseText;
-                    if(resultado==1){
+                    var resultado=this.responseText.toString();
+                    if(resultado!="0"){
+                        sessionStorage.setItem('id',resultado);
                         window.location="/home";
                     }
-                    if(resultado==0){
+                    else{
                         alert("el password o correo estan mal vuelva a ingresarlos");
                     }
                     
