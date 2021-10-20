@@ -1,5 +1,5 @@
 import * as THREE from './threejs/three.module.js';
-import {STLLoader} from './threejs/STLLoader.js';
+import {STLLoader} from './threejs/STLLoader2.js';
 import {OrbitControls} from './threejs/OrbitControls.js';
 
 let scene, camera, renderer, object;
@@ -52,4 +52,27 @@ loader.load('/3dmodels/mono.stl', (model)=>{
     init();
 });
 
+import {GLTFLoader} from './threejs/GLTFLoader.js';
+const loader2 = new GLTFLoader();
 
+loader2.load( './3dmodels/girl.glb', function ( gltf ) {
+
+	scene.add( gltf.scene );
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
+
+let loader3 = new GLTFLoader();
+
+loader3.load( './3dmodels/girl2.glb', function ( g ) {
+
+	scene.add( g.scene );
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
