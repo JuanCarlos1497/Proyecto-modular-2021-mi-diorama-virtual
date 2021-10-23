@@ -175,7 +175,7 @@ app.post("/insertarnivel",(req,res)=>{
  historial
  estado //de ciudad
  */
-app.post("/alumno",(req,res)=>{
+app.post("/insertalumno",(req,res)=>{
   var id_alumno = req.param('id_alumno');
   var puntos=req.param('puntos');
   var opiniones=req.param('opiniones');
@@ -280,7 +280,7 @@ fecha_eliminado
 app.post("/recomendacion",(req,res)=>{
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    var dbo = db.db("mydb");
+    var dbo = db.db(base);
     var myobj = { name: "Company Inc", address: "Highway 37" };
     dbo.collection("customers").insertOne(myobj, function(err, res) {
       if (err) throw err;

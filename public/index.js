@@ -1,10 +1,11 @@
 import * as THREE from './threejs/three.module.js';
-import {STLLoader} from './threejs/STLLoader2.js';
-import {OrbitControls} from './threejs/OrbitControls.js';
+import { STLLoader } from './threejs/STLLoader2.js';
+import { OrbitControls } from './threejs/OrbitControls.js';
+
 
 let scene, camera, renderer, object;
 
-function init(){
+function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x2a003b);
 
@@ -25,21 +26,22 @@ function init(){
     let control = new OrbitControls(camera, renderer.domElement);
 
     let light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(0,0,10);
+    light.position.set(0, 0, 10);
     scene.add(light);
 
     let light2 = new THREE.DirectionalLight(0xffffff);
-    light2.position.set(0,0,-10);
+    light2.position.set(0, 0, -10);
     scene.add(light2);
 
     animate();
 }
 
-function animate(){
+function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 }
 
+/*
 let loader = new STLLoader();
 loader.load('/3dmodels/mono.stl', (model)=>{
     object = new THREE.Mesh(
@@ -57,11 +59,11 @@ const loader2 = new GLTFLoader();
 
 loader2.load( './3dmodels/girl.glb', function ( gltf ) {
 
-	scene.add( gltf.scene );
+    scene.add( gltf.scene );
 
 }, undefined, function ( error ) {
 
-	console.error( error );
+    console.error( error );
 
 } );
 
@@ -69,10 +71,78 @@ let loader3 = new GLTFLoader();
 
 loader3.load( './3dmodels/girl2.glb', function ( g ) {
 
-	scene.add( g.scene );
+    scene.add( g.scene );
 
 }, undefined, function ( error ) {
 
-	console.error( error );
+    console.error( error );
+
+} );
+*/
+//var loader = new THREE.FBXLoader();
+/*
+loader.load('.FBX', function (object) {
+
+
+    object.traverse(function (child) {
+        if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = false;
+            child.flatshading = true;
+        }
+    });
+
+    scene.add(object);
+});
+*/
+//cargando escenario
+//const material = new THREE.MeshNormalMaterial()
+/*
+import {FBXLoader} from './threejs/FBXLoader.js';
+const fbxLoader = new FBXLoader()
+fbxLoader.load('./3dmodels/update/FBX/aloe.FBX',
+    function(object){
+        // object.traverse(function (child) {
+        //     if ((child as THREE.Mesh).isMesh) {
+        //         // (child as THREE.Mesh).material = material
+        //         if ((child as THREE.Mesh).material) {
+        //             ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
+        //         }
+        //     }
+        // })
+        // object.scale.set(.01, .01, .01)
+        scene.add(object)
+    },
+    (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+    },
+    (error) => {
+        console.log(error)
+    }
+)*/
+
+// model
+let mixer;
+import {FBXLoader} from './threejs/FBXLoader.js';
+const loader = new FBXLoader();
+loader.load( './3dmodels/update/FBX/aloe.FBX', function ( object ) {
+
+    mixer = new THREE.AnimationMixer( object );
+
+    const action = mixer.clipAction( object.animations[ 0 ] );
+    action.play();
+
+    object.traverse( function ( child ) {
+
+        if ( child.isMesh ) {
+
+            child.castShadow = true;
+            child.receiveShadow = true;
+
+        }
+
+    } );
+
+    scene.add( object );
 
 } );
