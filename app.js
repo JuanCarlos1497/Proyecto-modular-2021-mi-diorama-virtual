@@ -292,4 +292,25 @@ app.post("/recomendacion",(req,res)=>{
   });
 });
 
+/*
+const Say = require('say').Say;
+const say=new Say('win32');
+//say.speak('hola');
+say.speak("que tal?",null, 1.0, (err) => {
+  if (err) {
+    return console.error(err)
+  }
+ 
+  console.log('se reprodujo el texto.')
+});*/
+//say.stop();
+/*
+say.speak('Hello, how are you today?', (err) => {
+    if (err) {
+        return console.error(err);
+    }
+
+    console.log('Text has been spoken.');
+});*/
+
 app.listen(port, () => { console.log("se inicio el servidor"); });

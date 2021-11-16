@@ -5,6 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400&amp;display=swap'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+  <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- production version, optimized for size and speed -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+
+
+
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
@@ -34,18 +52,173 @@
             background: #5cb85c;
         }
 
+        p {
+            position: absolute;
+            left: 50%;
+            top: 0px;
+            background-color: aliceblue;
+        }
+
         #boton {
             position: absolute;
             left: 90%;
             top: 30px;
 
         }
+
+        /* ------------------------- */
+        /* POPUP */
+        /* ------------------------- */
+
+        .overlay {
+            background: rgba(0, 0, 0, .3);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            visibility: hidden;
+        }
+
+        .overlay.active {
+            visibility: visible;
+        }
+
+        .popup {
+            background: #F8F8F8;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            font-family: 'Montserrat', sans-serif;
+            padding: 10px;
+            text-align: center;
+            width: 600px;
+
+            transition: .3s ease all;
+            transform: scale(0.7);
+            opacity: 0;
+        }
+
+        .popup .btn-cerrar-popup {
+            font-size: 16px;
+            line-height: 16px;
+            display: block;
+            text-align: right;
+            transition: .3s ease all;
+            color: #BBBBBB;
+        }
+
+        .popup .btn-cerrar-popup:hover {
+            color: #000;
+        }
+
+        .popup h3 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0;
+        }
+
+        .popup h4 {
+            font-size: 26px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0;
+        }
+
+        .popup form .contenedor-inputs {
+            opacity: 0;
+        }
+
+        .popup form .contenedor-inputs input {
+            /*width: 100%;*/
+            margin-bottom: 20px;
+            height: 52px;
+            font-size: 18px;
+            line-height: 52px;
+            text-align: center;
+            border: 1px solid #BBBBBB;
+        }
+
+        .popup form .btn-submit {
+            padding: 0 20px;
+            /*height: 40px;*/
+            line-height: 40px;
+            border: none;
+            color: #fff;
+            background: #5E7DE3;
+            border-radius: 3px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .3s ease all;
+        }
+
+        .popup form .btn-submit:hover {
+            background: rgba(94, 125, 227, .9);
+        }
+
+        /* ------------------------- */
+        /* ANIMACIONES */
+        /* ------------------------- */
+        .popup.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .popup.active h3 {
+            animation: entradaTitulo .8s ease .5s forwards;
+        }
+
+        .popup.active h4 {
+            animation: entradaSubtitulo .8s ease .5s forwards;
+        }
+
+        .popup.active .contenedor-inputs {
+            animation: entradaInputs 1s linear 1s forwards;
+        }
+
+        @keyframes entradaTitulo {
+            from {
+                opacity: 0;
+                transform: translateY(-25px);
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes entradaSubtitulo {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes entradaInputs {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 
 </head>
 
 <body>
-
+    <div id="contenedor"></div>
     <div id="container" style="position: relative;">
         <div id="campo-juego"></div>
         <button id="boton" onclick="cerrarsession()" type="button" class="btn btn-outline-warning">Cerrar
@@ -54,6 +227,15 @@
         <img id="imagen" width="10%" height="10%"
             src="https://servidorftpescuela.000webhostapp.com/fotos/david01folder/243321838_2768663216766793_4163524482625227070_n.jpg">
     -->
+    </div>
+    
+    <div class="overlay" id="overlay" >
+        <div class="popup" id="popup" style="background-color: rgba(187, 179, 179, 0.5)">
+            <a href="#" onclick="cerrar()" class="btn-cerrar-popup"><i class="fas fa-times"></i></a>
+            <img src="midioramavirtual.jpg" width="80%" height="80%">
+            <br>
+            <button type="button" class="btn btn-outline-dark" onclick="cerrar()">siguiente</button>
+        </div>
     </div>
     <script type="module" src="./index.js"></script>
 
@@ -66,12 +248,44 @@
 </body>
 
 <script>
+    var btnAbrirPopup = document.getElementById('btn-abrir-popup'),
+
+        overlay = document.getElementById('overlay'),
+        popup = document.getElementById('popup');
+        
+    overlay.classList.add('active');
+    popup.classList.add('active');
+    function cerrar(){
+        const music = new Audio('./audio/adventures-nivel.mp3');
+        console.log("se cargo el archivo en la instancia");
+        music.play();
+        console.log("damos play  para reproduccion");
+        music.loop = true;
+        console.log("activamos el ciclo infinito");
+        //music.playbackRate = 2;
+        console.log("play de musica");
+        overlay.classList.remove('active');
+	popup.classList.remove('active');
+    }
+    //});
+    /*
+    window.onload = function () {
+        const music = new Audio('./audio/adventures-nivel.mp3');
+        console.log("se cargo el archivo en la instancia");
+        music.play();
+        console.log("damos play  para reproduccion");
+        music.loop = true;
+        console.log("activamos el ciclo infinito");
+        //music.playbackRate = 2;
+        console.log("play de musica");
+    }
+    */
     function cerrarsession() {
         window.location = "/cerrarsession";
         window.location = "/";
     }
     function datosGlobales() {
-        const url = '/datos?id='+sessionStorage.getItem('id');
+        const url = '/datos?id=' + sessionStorage.getItem('id');
         const http = new XMLHttpRequest()
 
         http.open("POST", url)
@@ -88,7 +302,11 @@
                     img.setAttribute("width", "10%");
                     img.setAttribute("height", "10%");
                     img.setAttribute("src", "https://servidorftpescuela.000webhostapp.com/fotos/" + element.nombre + "folder/" + element.foto);
+                    let pNombre = document.createElement('p');
+                    pNombre.innerText = element.nombre;
+
                     divContainer.append(img);
+                    divContainer.append(pNombre);
                 })
 
             }
@@ -97,21 +315,23 @@
     }
     datosGlobales();
 
-    function fijaUsuario(){
+    function fijaUsuario() {
         const url = ''
-const http = new XMLHttpRequest()
+        const http = new XMLHttpRequest()
 
-http.open("POST", url)
-http.onreadystatechange = function(){
+        http.open("POST", url)
+        http.onreadystatechange = function () {
 
-    if(this.readyState == 4 && this.status == 200){
-        var resultado = JSON.parse(this.responseText)
-        console.log(resultado.id)
+            if (this.readyState == 4 && this.status == 200) {
+                var resultado = JSON.parse(this.responseText)
+                console.log(resultado.id)
+            }
+        }
+        http.send()
     }
-}
-http.send()
-    }
 
+
+    //setTimeout ("redireccionar()", 5000); //tiempo expresado en milisegundos
 </script>
 
 </html>
