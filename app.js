@@ -77,6 +77,9 @@ app.get("/planta",(req, res)=>{
   res.sendFile(__dirname+"/public/plantas.html");
 });
 
+app.get("/prueba",(req, res)=>{
+  res.sendFile(__dirname+"/public/prueba.html");
+});
 
 
 

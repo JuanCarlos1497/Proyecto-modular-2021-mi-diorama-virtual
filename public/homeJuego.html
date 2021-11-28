@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
@@ -257,13 +257,13 @@
     popup.classList.add('active');
     function cerrar(){
         const music = new Audio('./audio/adventures-nivel.mp3');
-        console.log("se cargo el archivo en la instancia");
+        //console.log("se cargo el archivo en la instancia");
         music.play();
-        console.log("damos play  para reproduccion");
+        //console.log("damos play  para reproduccion");
         music.loop = true;
-        console.log("activamos el ciclo infinito");
-        //music.playbackRate = 2;
-        console.log("play de musica");
+        //console.log("activamos el ciclo infinito");
+        music.playbackRate = 2;
+        //console.log("play de musica");
         overlay.classList.remove('active');
 	popup.classList.remove('active');
     }
