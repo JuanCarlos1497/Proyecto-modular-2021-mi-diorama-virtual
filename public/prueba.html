@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    
     <script type="module">
         
 import * as THREE from './build/three.module.js';
@@ -48,7 +49,8 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 //cambaimos el color del fondo
-renderer.setClearColorHex(0xffffff,1);
+//renderer.setClearColorHex(0x333F47, 1);
+renderer.setClearColor(0x021468);
 document.body.appendChild(renderer.domElement);
 
 camera.position.set(100, 40, 100);
@@ -101,7 +103,27 @@ var personew=new THREE.Group();
 var perso=new THREE.Object3D();
 var personajeCaminando=new THREE.Object3D();
 var personajeEstatico=new THREE.Object3D();
+var aloe=new THREE.Object3D();
 
+
+fbx.load('3dmodels/aloe.fbx',function(objectAloe){
+    aloe.add(objectAloe);
+});
+
+scene.add(aloe);
+
+/*for(var i=0;i<30;i++){
+    console.log(aloe.scale.x+=i);
+    aloe.scale.y+=i;
+    aloe.scale.z+=i;
+}
+function incrementar(){
+    for(var i=0;i<30;i++){
+        console.log(aloe.scale.x-=i);
+        aloe.scale.y-=i;
+        aloe.scale.z-=i;
+    }
+}*/
 fbx.load('3dmodels/chibi.fbx',function(personaje){
     personaje.position.set(-100,0,-100);
     perso=personaje;
@@ -112,12 +134,12 @@ fbx.load('3dmodels/chibi.fbx',function(personaje){
 //grupoPersonaje.add(sessionStorage.getItem('personaje'));
 scene.add(perso);
 var loadergltf = new GLTFLoader();
-loadergltf.load("3dmodels/Escenario3.gltf", function (obj) {
+loadergltf.load("3dmodels/playa.gltf", function (obj) {
     obj.scene.scale.set(20,20,20);
     scene.add(obj.scene);
 });
 //agregamos luz
-/*
+
 const light = new THREE.AmbientLight(0x404040); // soft white light
 scene.add(light);
 
@@ -132,8 +154,9 @@ dirLight.shadow.camera.top = 180;
 dirLight.shadow.camera.bottom = - 100;
 dirLight.shadow.camera.left = - 120;
 dirLight.shadow.camera.right = 120;
-scene.add(dirLight);*/
+scene.add(dirLight);
 
+/*
 const directionalLight = new THREE.DirectionalLight('#ffffff', 4)
 directionalLight.castShadow = true
 directionalLight.shadow.camera.far = 15
@@ -141,6 +164,7 @@ directionalLight.shadow.mapSize.set(1024, 1024)
 directionalLight.shadow.normalBias = 0.05
 directionalLight.position.set(3.5, 2, - 1.25)
 scene.add(directionalLight)
+*/
 
 
 renderer.physicallyCorrectLights = true
@@ -275,6 +299,10 @@ function colisionBloques(){
 const animate = function () {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    
+    console.log(aloe.scale.x+=1);
+    aloe.scale.y+=1;
+    aloe.scale.z+=1;
 };
 
 animate();
@@ -380,6 +408,7 @@ fbxLoader.load('./3dmodels/update/FBX/aloe.FBX',
 
 
     </script>
+    <button onclick="incrementar()">incrementar</button>
 </body>
 
 </html>
